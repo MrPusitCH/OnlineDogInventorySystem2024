@@ -1,0 +1,100 @@
+/* CSS สำหรับ Navbar */
+.navbar {
+    padding: 1rem;
+    z-index: 1000; /* ให้เมนูอยู่ด้านบนสุด */
+    position: relative;
+}
+
+.navbar .navbar-nav {
+    flex-direction: row; /* ให้ไอเทมในเมนูเรียงในแถว */
+}
+
+.nav-link {
+    color: white !important;
+    font-size: 1.1rem;
+    margin-right: 15px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.fa-user, .fa-bag-shopping {
+    margin-right: 5px;
+}
+
+/* เพิ่มขนาดสำหรับไอคอนตระกร้าสินค้า */
+.cart-icon {
+    position: relative;
+}
+
+/* การตั้งค่าอนิเมชั่น */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out forwards; /* เรียกใช้อนิเมชั่น */
+}
+
+/* ปรับระยะห่างของปุ่ม */
+.card-body .btn {
+    margin-top: 10px; /* เพิ่มระยะห่างระหว่างปุ่ม */
+}
+
+/* การจัดการภาพใน Carousel */
+.carousel-item img {
+    height: 500px;
+    object-fit: cover;
+}
+
+/* กรอบการ์ดสินค้า */
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ปรับความสูงของภาพและทำให้ภาพขยับขึ้นแสดงครบ */
+.card-img-top {
+    height: 300px; /* เพิ่มความสูงของภาพ */
+    object-fit: contain; /* ให้ภาพคงสัดส่วนและไม่ถูกตัด */
+    object-position: top; /* จัดตำแหน่งภาพให้อยู่ด้านบน */
+    flex-shrink: 0; /* ป้องกันการบีบของภาพ */
+    margin-bottom: 15px; /* เพิ่มระยะห่างจากเนื้อหาด้านล่าง */
+}
+
+.card-body {
+    text-align: center;
+}
+
+/* Footer */
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0; /* เพิ่ม padding เพื่อให้ดูดีขึ้น */
+    background-color: #343a40; /* ให้ footer มีสีพื้นหลัง */
+    color: white; /* ทำให้ข้อความใน footer เป็นสีขาว */
+}
+
+/* เพิ่มการควบคุมที่ให้แน่ใจว่าไม่กินขอบจอ */
+body {
+    overflow-x: hidden; /* หลีกเลี่ยงการเลื่อนซ้ายขวา */
+}
