@@ -1,6 +1,6 @@
 <?php 
 session_start();
-include('db_connection.php');
+include('db_connection.php'); // คงไว้ตามเดิม
 
 $id = $_GET['id'];
 $sql = "SELECT * FROM products WHERE id='$id'";
@@ -15,19 +15,21 @@ if ($result->num_rows > 0) {
 
 // ตรวจสอบว่ามีการส่งข้อมูลจากฟอร์ม
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
-    $product_id = $_POST['product_id'];
-    $quantity = $_POST['quantity'];
+    if (isset($_SESSION['username'])) { // ตรวจสอบว่าล็อกอินหรือยัง
+        $product_id = $_POST['product_id'];
+        $quantity = $_POST['quantity'];
 
-    // เพิ่มสินค้าในตะกร้า
-    if (isset($_SESSION['cart'][$product_id])) {
-        $_SESSION['cart'][$product_id] += $quantity; // ถ้ามีสินค้านี้แล้ว เพิ่มจำนวน
-    } else {
-        $_SESSION['cart'][$product_id] = $quantity; // ถ้ายังไม่มีให้เพิ่มสินค้าใหม่
+        // เพิ่มสินค้าในตะกร้า
+        if (isset($_SESSION['cart'][$product_id])) {
+            $_SESSION['cart'][$product_id] += $quantity; // ถ้ามีสินค้านี้แล้ว เพิ่มจำนวน
+        } else {
+            $_SESSION['cart'][$product_id] = $quantity; // ถ้ายังไม่มีให้เพิ่มสินค้าใหม่
+        }
+
+        // กลับไปยังหน้าร้านค้า
+        header("Location: ../index.php");
+        exit;
     }
-
-    // กลับไปยังหน้าร้านค้า
-    header("Location: ../index.php");
-    exit;
 }
 ?>
 
@@ -88,6 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
         .back-btn:hover {
             background-color: #5a6268;
         }
+        /* เพิ่มการตั้งค่าปุ่มให้จาง */
+        .btn.disabled, .btn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -102,7 +109,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
             <form action="" method="POST">
                 <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
                 <input type="hidden" name="quantity" value="1"> <!-- ตั้งค่าปริมาณสินค้า -->
-                <button type="submit" name="add_to_cart" class="btn btn-primary mt-2">Add to Cart</button>
+                <button type="submit" name="add_to_cart" 
+                    class="btn btn-primary mt-2 <?php echo isset($_SESSION['username']) ? '' : 'disabled'; ?>" 
+                    <?php echo isset($_SESSION['username']) ? '' : 'disabled'; ?>>Add to Cart</button>
             </form>
         </div>
 

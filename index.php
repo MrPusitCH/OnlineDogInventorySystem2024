@@ -155,14 +155,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_to_cart'])) {
                 echo "
                 <div class='col-md-4 fade-in'>
                     <div class='card mb-4 shadow-sm'>
-                        <img src='front-end/images/{$row['image']}' class='card-img-top' alt='{$row['name']}'>
+                        <img src='front-end/images/{$row['image']}' class='card-img-top' alt='{$row['name']}' style='height: 200px; object-fit: cover;'>
                         <div class='card-body'>
                             <h5 class='card-title'>{$row['name']}</h5>
                             <p class='card-text'>Price: {$row['price']} บาท</p>
                             <p class='card-text'>Stock: {$row['stock']} ชิ้น</p> <!-- แสดงจำนวนสินค้า -->
                             <form method='POST' action='index.php'>
                                 <input type='hidden' name='product_id' value='{$row['id']}'>
-                                <button type='submit' name='add_to_cart' class='btn btn-primary'>Add to Cart</button>
+                                ";
+                // เช็คว่าผู้ใช้ล็อกอินอยู่หรือไม่
+                if (isset($_SESSION['username'])) {
+                    echo "<button type='submit' name='add_to_cart' class='btn btn-primary'>Add to Cart</button>";
+                } else {
+                    echo "<button type='button' class='btn btn-primary' disabled>Add to Cart</button>";
+                }
+                echo "
                                 <a href='front-end/product.php?id={$row['id']}' class='btn btn-secondary'>View Details</a>
                             </form>
                         </div>
